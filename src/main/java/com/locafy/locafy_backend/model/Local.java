@@ -1,27 +1,77 @@
 package com.locafy.locafy_backend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import com.locafy.locafy_backend.model.Usuario;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@Getter
-@Setter
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
-@Table(name = "locales")
+@Table(name= "local")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Local {
 
-    // Id autogenerado para identificar cada local.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    // Nombre del local que se mostrara en los listados y detalles.
     @Column(nullable = false)
     private String nombre;
+
+    @Column(nullable = false)
+    private String direccion;
+
+    @Column(nullable = false)
+    private String comuna;
+
+    @Column(nullable = false)
+    private String ciudad;
+
+    @Column(nullable = false)
+    private String medioPago;
+
+    @Column(nullable = false)
+    private String horarioLocal;
+
+    @Column(nullable = false)
+    private String telefonoContacto;
+
+    @Column(nullable = false)
+    private String imagenUrl;
+
+    @Column(nullable = false)
+    private Boolean activo;
+
+    @Column(nullable = false)
+    private Double ratingPromedio;
+
+    @Column(nullable = false)
+    private Integer cantidadResenas;
+
+    @Column(nullable = false)
+    private double latitud;
+
+    @Column(nullable = false)
+    private double longitud;
+
+    @Column(nullable = false)
+    private String placeIdGoogle;
+
+    @ElementCollection(targetClass = CategoriaLocal.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "local_categorias", joinColumns = @JoinColumn(name = "local_id"))
+    @Column(name = "categoria")
+    private Set<CategoriaLocal> categorias = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "dueno_id")
+    private Usuario dueno;
+
 
 }
