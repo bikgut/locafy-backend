@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
+import com.locafy.locafy_backend.model.Usuario;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -70,7 +71,7 @@ public class Local {
 
     @ManyToOne
     @JoinColumn(name = "dueno_id")
-    private User dueno;
+    private Usuario dueno;
 
 
 }
