@@ -27,7 +27,7 @@ public class LocalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Local> obtenerPorId(@PathVariable String id){
+    public ResponseEntity<Local> obtenerPorId(@PathVariable Long id){
         try{
             Local local = localService.obtenerPorId(id);
             return ResponseEntity.ok(local);
@@ -43,7 +43,7 @@ public class LocalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Local> actualizarLocal(@PathVariable String id, @RequestBody Local local){
+    public ResponseEntity<Local> actualizarLocal(@PathVariable Long id, @RequestBody Local local){
         try{
             Local actualiza = localService.obtenerPorId(id);
             actualiza.setId(id);
@@ -68,7 +68,7 @@ public class LocalController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarLocal(@PathVariable String id){
+    public ResponseEntity<?> eliminarLocal(@PathVariable Long id){
         try{
             localService.borrarLocal(id);
             return ResponseEntity.ok("Producto eliminado exitosamente!.");

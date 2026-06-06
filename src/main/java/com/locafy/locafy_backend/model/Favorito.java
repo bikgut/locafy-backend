@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class Favorito {
 
     @Id
-    private String codigo;
+    private Long id;
 
     @Column(name = "id_usuario")
     private String usuario;

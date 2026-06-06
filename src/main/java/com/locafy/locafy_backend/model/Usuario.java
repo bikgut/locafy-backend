@@ -1,11 +1,6 @@
 package com.locafy.locafy_backend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,7 +28,7 @@ public class Usuario {
     private String password;
 
     // Campo simple para distinguir permisos o tipo de usuario.
-    @Column(nullable = false)
-    private String rol;
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
 
 }

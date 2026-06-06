@@ -17,9 +17,9 @@ public class LocalService {
 
     public List<Local> obtenerLocales() {return localRepository.findAll();}
 
-    public Local obtenerPorId(String id) {return localRepository.findById(id).orElse(null);}
+    public Local obtenerPorId(Long id) {return localRepository.findById(id).orElse(null);}
 
     public Local guardarLocal(Local local) {return localRepository.save(local);}
 
-    public void borrarLocal(String id) {localRepository.deleteById(id);}
+    public void borrarLocal(Long id) {localRepository.deleteById(id);}
 }

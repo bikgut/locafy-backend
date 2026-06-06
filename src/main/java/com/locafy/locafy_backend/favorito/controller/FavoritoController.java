@@ -28,9 +28,9 @@ public class FavoritoController {
     }
 
     @GetMapping("/{codigo}")
-    public ResponseEntity<Favorito> obtenerPorId(@PathVariable String codigo){
+    public ResponseEntity<Favorito> obtenerPorId(@PathVariable Long id){
         try{
-            Favorito favorito = favoritoService.obtenerPorId(codigo);
+            Favorito favorito = favoritoService.obtenerPorId(id);
             return ResponseEntity.ok(favorito);
         } catch(Exception e){
             return ResponseEntity.notFound().build();
@@ -44,10 +44,10 @@ public class FavoritoController {
     }
 
     @PutMapping("/{codigo}")
-    public ResponseEntity<Favorito> actualizaFavorito(@PathVariable String codigo, @RequestBody Favorito favorito){
+    public ResponseEntity<Favorito> actualizaFavorito(@PathVariable Long id, @RequestBody Favorito favorito){
         try{
-            Favorito actualiza = favoritoService.obtenerPorId(codigo);
-            actualiza.setCodigo(codigo);
+            Favorito actualiza = favoritoService.obtenerPorId(id);
+            actualiza.setId(id);
             actualiza.setLocal(favorito.getLocal());
             actualiza.setUsuario(favorito.getUsuario());
             actualiza.setFechaAgregado(favorito.getFechaAgregado());
@@ -60,12 +60,12 @@ public class FavoritoController {
     }
 
     @DeleteMapping("/{codigo}")
-    public ResponseEntity<?> eliminarFavorito(@PathVariable String codigo){
+    public ResponseEntity<?> eliminarFavorito(@PathVariable Long id){
         try{
-            favoritoService.borrarFavorito(codigo);
+            favoritoService.borrarFavorito(id);
             return ResponseEntity.ok("Producto eliminado exitosamente!.");
         } catch(Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado con el id: " + codigo);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado con el id: " + id);
         }
     }
 }

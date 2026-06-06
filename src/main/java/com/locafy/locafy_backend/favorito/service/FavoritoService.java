@@ -18,9 +18,9 @@ public class FavoritoService {
 
     public List<Favorito> obtenerFavoritos() {return favoritoRepository.findAll();}
 
-    public Favorito obtenerPorId(String codigo) {return favoritoRepository.findById(codigo).orElse(null);}
+    public Favorito obtenerPorId(Long id) {return favoritoRepository.findById(id).orElse(null);}
 
     public Favorito guardarFavorito(Favorito favorito) {return favoritoRepository.save(favorito);}
 
-    public void borrarFavorito(String codigo) {favoritoRepository.deleteById(codigo);}
+    public void borrarFavorito(Long id) {favoritoRepository.deleteById(id);}
 }
