@@ -4,6 +4,7 @@ package com.locafy.locafy_backend.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -25,7 +26,14 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login").permitAll()
+                                .requestMatchers("/api/usuarios/login").permitAll()
+                                .requestMatchers("/api/usuarios/{id}").permitAll()
+                                .requestMatchers("/api/usuarios").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/usuarios/register").permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/dueno/**").hasAnyRole("DUENO_LOCAL", "ADMIN")
+                                .requestMatchers("/cliente/**").hasAnyRole("CLIENTE", "ADMIN", "DUENO_LOCAL")
+                                .requestMatchers("/error").permitAll()
                                 .anyRequest().authenticated()
                         )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

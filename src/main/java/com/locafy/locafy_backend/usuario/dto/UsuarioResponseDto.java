@@ -20,7 +20,7 @@ public class UsuarioResponseDto {
         dto.setId(usuario.getId());
         dto.setNombre(usuario.getNombre());
         dto.setEmail(usuario.getEmail());
-        dto.setRol(usuario.getRol());
+        dto.setRol(usuario.getRol().name());
         return dto;
     }
 

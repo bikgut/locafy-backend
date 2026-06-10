@@ -22,12 +22,12 @@ public class JwtUtil {
                 .withIssuer("LocafyApp")
                 .withClaim("rol", rol)
                 .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 ))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 ))
                 .sign(algorithm);
     }
 
-    public DecodedJWT validarYDecdificar(String token){
-        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET_KEY))
+    public DecodedJWT validarYDecodificar(String token){
+        JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer("LocafyApp")
                 .build();
 
@@ -35,16 +35,16 @@ public class JwtUtil {
     }
 
     public String extraerUsername(String token){
-        return validarYDecdificar(token).getSubject();
+        return validarYDecodificar(token).getSubject();
     }
 
     public String extraerRol(String token){
-        return validarYDecdificar(token).getClaim("rol").asString();
+        return validarYDecodificar(token).getClaim("rol").asString();
     }
 
     public boolean TokenValido(String token){
         try {
-            validarYDecdificar(token);
+            validarYDecodificar(token);
             return true;
         }catch (JWTVerificationException e){
             return false;

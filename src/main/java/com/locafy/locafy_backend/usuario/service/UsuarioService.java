@@ -2,11 +2,16 @@ package com.locafy.locafy_backend.usuario.service;
 
 import com.locafy.locafy_backend.common.exception.ConflictException;
 import com.locafy.locafy_backend.common.exception.ResourceNotFoundException;
+import com.locafy.locafy_backend.model.Local;
+import com.locafy.locafy_backend.model.Rol;
 import com.locafy.locafy_backend.model.Usuario;
 import com.locafy.locafy_backend.resena.repository.ResenaRepository;
+import com.locafy.locafy_backend.usuario.dto.UsuarioRequestDto;
 import com.locafy.locafy_backend.usuario.dto.UsuarioResponseDto;
 import com.locafy.locafy_backend.usuario.repository.UsuarioRepository;
 import java.util.List;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +21,12 @@ public class UsuarioService {
     // Repositorios necesarios para resolver operaciones del modulo.
     private final UsuarioRepository usuarioRepository;
     private final ResenaRepository resenaRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, ResenaRepository resenaRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, ResenaRepository resenaRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.resenaRepository = resenaRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -37,6 +44,19 @@ public class UsuarioService {
                 .map(UsuarioResponseDto::fromEntity)
                 .toList();
     }
+
+    @Transactional
+    public UsuarioResponseDto guardarUsuario(UsuarioRequestDto request) {
+        Usuario usuario = new Usuario();
+        usuario.setNombre(request.getNombre());
+        usuario.setEmail(request.getEmail());
+        usuario.setPassword(passwordEncoder.encode(request.getPassword()));
+        usuario.setRol(request.getRol());
+
+        Usuario guardado = usuarioRepository.save(usuario);
+        return UsuarioResponseDto.fromEntity(guardado);
+    }
+
 
     @Transactional
     public void eliminarUsuario(Long id) {
